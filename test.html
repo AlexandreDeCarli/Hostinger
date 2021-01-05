@@ -1,0 +1,26 @@
+
+                    client_id: 'tradingview.com',
+                    user_id: 'public_user_id',
+                    preset: 'mobile',
+                    theme: 'light'
+                });
+
+                widget.onChartReady(function() {
+                    widget.chart().removeAllStudies();
+                    widget.chart().createStudy('Bollinger Bands', false, true);
+                    widget.chart().createStudy('Awesome Oscillator', false, true);
+                    // widget.chart().createStudy('Relative Strength Index', false, true);
+                    // widget.chart().createStudy('MACD', false, true);
+
+                });
+            };
+
+            window.addEventListener('DOMContentLoaded', initOnReady, false);
+        </script>
+    </head>
+
+    <body style="margin:0px;">
+        <div id="tv_chart_container"></div>
+    </body>
+
+</html>
