@@ -1,0 +1,61 @@
+<html>
+    <head>
+
+        <title>TradingView Charting Library demo</title>
+
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+        <script type="text/javascript" src="https://luxtrade.online/Public/Home/js/tradingview/charting_library/charting_library.min.js"></script>
+        <script type="text/javascript" src="datafeed.js"></script>
+
+        <script type="text/javascript">
+
+            function getParameterByName(name) {
+                name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+                var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                    results = regex.exec(location.search);
+                return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
+            function initOnReady() {
+
+                var widget = window.tvWidget = new TradingView.widget({
+                    fullscreen: true,
+                    symbol: 'BNBUSDT',
+                    interval: 'D',
+                    container_id: "tv_chart_container",
+
+                    //  BEWARE: no trailing slash is expected in feed URL
+                    datafeed: new Datafeed({ debug: true }),
+                    library_path: "charting_library/",
+                    locale: getParameterByName('lang') || "en",
+
+                    disabled_features: ["use_localstorage_for_settings"],
+                    enabled_features: ["study_templates"],
+                    charts_storage_url: 'http://saveload.tradingview.com',
+                    charts_storage_api_version: "1.1",
+                    client_id: 'tradingview.com',
+                    user_id: 'public_user_id',
+                    preset: 'mobile',
+                    theme: 'light'
+                });
+
+                widget.onChartReady(function() {
+                    widget.chart().removeAllStudies();
+                    widget.chart().createStudy('Bollinger Bands', false, true);
+                    widget.chart().createStudy('Awesome Oscillator', false, true);
+                    // widget.chart().createStudy('Relative Strength Index', false, true);
+                    // widget.chart().createStudy('MACD', false, true);
+
+                });
+            };
+
+            window.addEventListener('DOMContentLoaded', initOnReady, false);
+        </script>
+    </head>
+
+    <body style="margin:0px;">
+        <div id="tv_chart_container"></div>
+    </body>
+
+</html>
